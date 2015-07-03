@@ -1,0 +1,12 @@
+[
+	"LevelScene.ts",
+	"StartScene.ts",
+	"Bar.ts",
+	"LoseScene.ts",
+	"WinScene.ts",
+	"LoadingUI.ts",
+	"MonsterManager.ts",
+	"weixinshare.ts",
+	"GameScene.ts",
+	"Main.ts"
+]
