@@ -1,0 +1,40 @@
+{
+	"resources": [
+		{
+			"name": "background",
+			"type": "image",
+			"url": "assets/background.png"
+		},
+		{
+			"name": "start_button",
+			"type": "image",
+			"url": "assets/start.png"
+		},
+		{
+			"name": "tip",
+			"type": "image",
+			"url": "assets/tip.png"
+		},
+		{
+			"name": "match",
+			"type": "image",
+			"url": "assets/match.png"
+		},
+		{
+			"name": "fireTexture",
+			"type": "image",
+			"url": "assets/fireParticle.png"
+		},
+		{
+			"name": "fireData",
+			"type": "json",
+			"url": "assets/fireParticle.json"
+		}
+	],
+	"groups": [
+		{
+			"name": "preload",
+			"keys": "background,start_button,tip,match,fireTexture,fireData"
+		}
+	]
+}
