@@ -29,12 +29,47 @@
 			"name": "fireData",
 			"type": "json",
 			"url": "assets/fireParticle.json"
-		}
+		},
+        {
+          "name": "yanhuaTexture",
+          "type": "image",
+          "url": "assets/yanhua.png"
+        },
+        {
+          "name": "yanhuaData",
+          "type": "json",
+          "url": "assets/yanhua.json"
+        },
+        {
+          "name": "fire2Data",
+          "type": "json",
+          "url": "assets/fire2.json"
+        },
+        {
+          "name": "fuses",
+          "type": "image",
+          "url": "assets/fuses.png"
+        },
+        {
+          "name": "fire3Texture",
+          "type": "image",
+          "url": "assets/fire3.png"
+        },
+        {
+          "name": "fire3Data",
+          "type": "json",
+          "url": "assets/fire3.json"
+        },
+        {
+          "name": "background2",
+          "type": "image",
+          "url": "assets/background2.png"
+        }
 	],
 	"groups": [
 		{
 			"name": "preload",
-			"keys": "background,start_button,tip,match,fireTexture,fireData"
+			"keys": "background2,background,start_button,tip,match,fireTexture,fireData,yanhuaData,yanhuaTexture,fire2Data,fuses,fire3Data,fire3Texture"
 		}
 	]
 }

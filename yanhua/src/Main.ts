@@ -35,6 +35,8 @@ class Main extends egret.DisplayObjectContainer {
      */
     private loadingView:LoadingUI;
 
+    private position:any;
+
     public constructor() {
         super();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
@@ -114,6 +116,7 @@ class Main extends egret.DisplayObjectContainer {
         sky.width = stageW;
         sky.height = stageH;
 
+
         //start button
         var startButton:egret.Bitmap = this.createBitmapByName("start_button");
         startButton.anchorX = 0.5;
@@ -121,37 +124,108 @@ class Main extends egret.DisplayObjectContainer {
         startButton.x = stageW/2;
         startButton.y = 341;
         startButton.touchEnabled = true;
-        startButton.addEventListener(egret.TouchEvent.TOUCH_BEGIN,function(){
-            startButton.scaleX = 0.9;
-            startButton.scaleY = 0.9;
+        startButton.addEventListener(egret.TouchEvent.TOUCH_BEGIN,function(event){
+            if(!match.onfire){
+                this.position = match.x = event.stageX;
+                match.y = event.stageY;
+                match.visible = true;
+                match.isDown = true;
+            }
         },this);
         startButton.addEventListener(egret.TouchEvent.TOUCH_END,function(){
-            startButton.scaleX = 1;
-            startButton.scaleY = 1;
-            startButton.visible = false;
-            tipText.visible = false;
-            match.visible = true;
+            if(match.onfire == false){
+                match.visible = false;
+                this.position = false;
+            }
+            match.isDown = false;
         },this);
         this.addChild(startButton);
 
         this.touchEnabled = true;
         this.addEventListener(egret.TouchEvent.TOUCH_END,function(){
-            startButton.scaleX = 1;
-            startButton.scaleY = 1;
+            if(match.onfire == false){
+                match.visible = false;
+                this.position = false;
+            }
             match.isDown = false;
         },this);
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE,function(event){
+            if(match.onfire == false&&this.position != false&&(event.stageX-this.position >= 150)){
+                match.onfire = true;
+                this.position = false;
+                fire.emitterX = match.x - 55;
+                fire.emitterY = match.y - 45;
+                fire.start();
+            }
             if(match.isDown == false)return;
-            match.x = event.stageX;
+            match.x = event.stageX - 50;
             match.y = event.stageY;
+            fire.emitterX = match.x - 55;
+            fire.emitterY = match.y - 45;
+            if(shp.hitTestPoint(fire.emitterX,fire.emitterY)){
+                fire2.start();
+                egret.Tween.get(fuses.mask).to({x:-85},1700).to({y:50},1300);
+                egret.Tween.get(fire2).to({emitterX:stageW/2+10,emitterY:805},2000).to({emitterY:830,emitterX:stageW/2+5},1000).call(function(){
+                    fire2.stop();
+                    fire2.visible = false;
+                    yanhua.visible = true;
+                    var tween = egret.Tween.get(yanhua).to({emitterY:200,startSize:25},4000).call(function(){
+                        yanhua.stop();
+                        yanhua.visible = false;
+                        fire3.emitterX = yanhua.emitterX;
+                        fire3.emitterY = yanhua.emitterY;
+                        sky.texture = RES.getRes('background2');
+                        fire3.start(250);
+                        fire3.isfirst = true;
+                        fire3.addEventListener(egret.Event.COMPLETE,function(){
+                            if(fire3.isfirst){
+                                fire3.isfirst = false;
+                            }
+                            fire3.emitterX = yanhua.emitterX+(Math.random()-0.5)*200;
+                            fire3.emitterY = yanhua.emitterY+(Math.random()-0.5)*200;
+                            fire3.start(250);
+                            fire4.emitterX = fire3.emitterX+(Math.random()-0.5)*200;
+                            fire4.emitterY = fire3.emitterY+(Math.random()-0.5)*200;
+                            fire4.start(250);
+                            fire5.emitterX = fire3.emitterX+(Math.random()-0.5)*200;
+                            fire5.emitterY = fire3.emitterY+(Math.random()-0.5)*200;
+                            fire5.start(250);
+                        },this);
+                    });
+                });
+                match.visible = false;
+                fire.visible = false;
+                match.onfire = false;
+                tipText.visible = false;
+                startButton.visible = false;
+            }
         },this);
-        
+        var shp:egret.Shape = new egret.Shape();
+        shp.anchorX = 0.5;
+        shp.anchorY = 0.5;
+        shp.x = stageW/2+30;
+        shp.y = 800;
+        shp.width = 80;
+        shp.height = 40;
+        this.addChild( shp );
+
+
         //tip
         var tipText:egret.Bitmap = this.createBitmapByName('tip');
         tipText.anchorY = 0.5;
         tipText.x = 118;
         tipText.y = stageH/2;
         this.addChild(tipText);
+
+        //fuses
+
+        var fuses:egret.Bitmap = this.createBitmapByName('fuses');
+        fuses.anchorY = 1;
+        fuses.x = 340;
+        fuses.y = 792+fuses.height;
+        this.addChild(fuses);
+
+        fuses.mask = new egret.Rectangle(0,0,fuses.width,fuses.height);
 
         //match
         var match:any = this.createBitmapByName('match');
@@ -161,6 +235,7 @@ class Main extends egret.DisplayObjectContainer {
         match.y = stageH/2;
         match.visible = false;
         match.touchEnabled = true;
+        match.onfire = false;
         match.addEventListener(egret.TouchEvent.TOUCH_BEGIN,function(){
             match.isDown = true;
         },this);
@@ -169,8 +244,29 @@ class Main extends egret.DisplayObjectContainer {
         },this);
         this.addChild(match);
         //particle
-        this.system = new particle.GravityParticleSystem(RES.getRes('fireTexture'), RES.getRes('fireData'));
-        this.system.start();
+        var fire = new particle.GravityParticleSystem(RES.getRes('fireTexture'), RES.getRes('fireData'));
+        fire.emitterX = match.x - 55;
+        fire.emitterY = match.y - 45;
+        this.addChild(fire);
+
+        var yanhua = new particle.GravityParticleSystem(RES.getRes('yanhuaTexture'),RES.getRes('yanhuaData'));
+        yanhua.emitterX = stageW/2;
+        yanhua.emitterY = 830;
+        this.addChild(yanhua);
+        yanhua.start();
+        yanhua.visible = false;
+
+        var fire2 = new particle.GravityParticleSystem(RES.getRes('yanhuaTexture'),RES.getRes('fire2Data'));
+        fire2.emitterX = stageW/2+60;
+        fire2.emitterY = 800;
+        this.addChild(fire2);
+
+        var fire3:any = new particle.GravityParticleSystem(RES.getRes('fire3Texture'),RES.getRes('fire3Data'));
+        this.addChild(fire3);
+        var fire4 = new particle.GravityParticleSystem(RES.getRes('yanhuaTexture'),RES.getRes('fire3Data'));
+        this.addChild(fire4);
+        var fire5 = new particle.GravityParticleSystem(RES.getRes('fire3Texture'),RES.getRes('fire3Data'));
+        this.addChild(fire5);
         // var topMask:egret.Shape = new egret.Shape();
         // topMask.graphics.beginFill(0x000000, 0.5);
         // topMask.graphics.drawRect(0, 0, stageW, stageH);
