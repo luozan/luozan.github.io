@@ -1,0 +1,75 @@
+{
+	"resources": [
+		{
+			"name": "background",
+			"type": "image",
+			"url": "assets/background.png"
+		},
+		{
+			"name": "start_button",
+			"type": "image",
+			"url": "assets/start.png"
+		},
+		{
+			"name": "tip",
+			"type": "image",
+			"url": "assets/tip.png"
+		},
+		{
+			"name": "match",
+			"type": "image",
+			"url": "assets/match.png"
+		},
+		{
+			"name": "fireTexture",
+			"type": "image",
+			"url": "assets/fireParticle.png"
+		},
+		{
+			"name": "fireData",
+			"type": "json",
+			"url": "assets/fireParticle.json"
+		},
+        {
+          "name": "yanhuaTexture",
+          "type": "image",
+          "url": "assets/yanhua.png"
+        },
+        {
+          "name": "yanhuaData",
+          "type": "json",
+          "url": "assets/yanhua.json"
+        },
+        {
+          "name": "fire2Data",
+          "type": "json",
+          "url": "assets/fire2.json"
+        },
+        {
+          "name": "fuses",
+          "type": "image",
+          "url": "assets/fuses.png"
+        },
+      {
+        "name": "btn_share",
+        "type": "image",
+        "url": "assets/btn_share.png"
+      },
+      {
+        "name": "again",
+        "type": "image",
+        "url": "assets/again.png"
+      },
+      {
+        "name": "more",
+        "type": "image",
+        "url": "assets/more.png"
+      }
+	],
+	"groups": [
+		{
+			"name": "preload",
+			"keys": "btn_share,again,more,background,start_button,tip,match,fireTexture,fireData,yanhuaData,yanhuaTexture,fire2Data,fuses"
+		}
+	]
+}

@@ -1,4 +1,5 @@
 [
 	"LoadingUI.ts",
+	"Result.ts",
 	"Main.ts"
 ]

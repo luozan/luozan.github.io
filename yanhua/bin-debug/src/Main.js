@@ -92,6 +92,17 @@ var Main = (function (_super) {
      * Create a game scene
      */
     __egretProto__.createGameScene = function () {
+        if (typeof window['_curSound'] == 'undefined') {
+            window['_curSound'] = RES.getRes("sound");
+            window['_curSound'].type = egret.Sound.MUSIC;
+            window['_curSound'].play(true);
+        }
+        var sky2 = document.getElementById('sky');
+        sky2.style.display = 'block';
+        var top = document.getElementById('gameDiv').style.top;
+        var height = 63 * sky2.clientWidth / 690;
+        top = parseInt(top);
+        sky2.style.marginTop = -height + top + 'px';
         var sky = this.createBitmapByName("background");
         this.addChild(sky);
         var stageW = this.stage.stageWidth;
@@ -106,6 +117,9 @@ var Main = (function (_super) {
         startButton.y = 341;
         startButton.touchEnabled = true;
         startButton.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function (event) {
+            if (window['_curSound'].position == 0) {
+                window['_curSound'].play(true);
+            }
             if (!match.onfire) {
                 this.position = match.x = event.stageX;
                 match.y = event.stageY;
@@ -129,8 +143,12 @@ var Main = (function (_super) {
             }
             match.isDown = false;
         }, this);
+        var self = this;
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE, function (event) {
-            if (match.onfire == false && this.position != false && (event.stageX - this.position >= 150)) {
+            if (window['_curSound'].position == 0) {
+                window['_curSound'].play(true);
+            }
+            if (match.onfire == false && this.position != false && (Math.abs(event.stageX - this.position) >= 150)) {
                 match.onfire = true;
                 this.position = false;
                 fire.emitterX = match.x - 55;
@@ -143,36 +161,47 @@ var Main = (function (_super) {
             match.y = event.stageY;
             fire.emitterX = match.x - 55;
             fire.emitterY = match.y - 45;
-            if (shp.hitTestPoint(fire.emitterX, fire.emitterY)) {
+            if (shp.hitTestPoint(fire.emitterX, fire.emitterY) && !shp.isHit) {
+                shp.isHit = true;
                 fire2.start();
                 egret.Tween.get(fuses.mask).to({ x: -85 }, 1700).to({ y: 50 }, 1300);
-                egret.Tween.get(fire2).to({ emitterX: stageW / 2 + 10, emitterY: 805 }, 2000).to({ emitterY: 830, emitterX: stageW / 2 + 5 }, 1000).call(function () {
+                egret.Tween.get(fire2).to({ emitterX: stageW / 2 + 10, emitterY: 823 }, 2000).to({ emitterY: 848, emitterX: stageW / 2 + 5 }, 1000).call(function () {
                     fire2.stop();
                     fire2.visible = false;
-                    yanhua.visible = true;
-                    var tween = egret.Tween.get(yanhua).to({ emitterY: 200, startSize: 25 }, 4000).call(function () {
-                        yanhua.stop();
-                        yanhua.visible = false;
-                        fire3.emitterX = yanhua.emitterX;
-                        fire3.emitterY = yanhua.emitterY;
-                        sky.texture = RES.getRes('background2');
-                        fire3.start(250);
-                        fire3.isfirst = true;
-                        fire3.addEventListener(egret.Event.COMPLETE, function () {
-                            if (fire3.isfirst) {
-                                fire3.isfirst = false;
-                            }
-                            fire3.emitterX = yanhua.emitterX + (Math.random() - 0.5) * 200;
-                            fire3.emitterY = yanhua.emitterY + (Math.random() - 0.5) * 200;
-                            fire3.start(250);
-                            fire4.emitterX = fire3.emitterX + (Math.random() - 0.5) * 200;
-                            fire4.emitterY = fire3.emitterY + (Math.random() - 0.5) * 200;
-                            fire4.start(250);
-                            fire5.emitterX = fire3.emitterX + (Math.random() - 0.5) * 200;
-                            fire5.emitterY = fire3.emitterY + (Math.random() - 0.5) * 200;
-                            fire5.start(250);
-                        }, this);
-                    });
+                    //yanhua.visible = true;
+                    //var tween = egret.Tween.get(yanhua).to({emitterY:200,startSize:25},4000).call(function(){
+                    //    yanhua.stop();
+                    //    yanhua.visible = false;
+                    //    fire3.emitterX = yanhua.emitterX;
+                    //    fire3.emitterY = yanhua.emitterY;
+                    //    sky.texture = RES.getRes('background2');
+                    //    fire3.start(250);
+                    //    fire3.isfirst = true;
+                    //    fire3.addEventListener(egret.Event.COMPLETE,function(){
+                    //        if(fire3.isfirst){
+                    //            fire3.isfirst = false;
+                    //        }
+                    //        fire3.emitterX = yanhua.emitterX+(Math.random()-0.5)*200;
+                    //        fire3.emitterY = yanhua.emitterY+(Math.random()-0.5)*200;
+                    //        fire3.start(250);
+                    //        fire4.emitterX = fire3.emitterX+(Math.random()-0.5)*200;
+                    //        fire4.emitterY = fire3.emitterY+(Math.random()-0.5)*200;
+                    //        fire4.start(250);
+                    //        fire5.emitterX = fire3.emitterX+(Math.random()-0.5)*200;
+                    //        fire5.emitterY = fire3.emitterY+(Math.random()-0.5)*200;
+                    //        fire5.start(250);
+                    //    },this);
+                    //});
+                    window['makeBigBoom'](345, 200 - Math.random() * 50, 345);
+                    window['currentInterval'] = egret.setInterval(function () {
+                        var x = ~~(345 + (Math.random() - 0.5) * 180);
+                        window['makeBigBoom'](x, 200 - Math.random() * 50, x);
+                    }, this, 1000);
+                    egret.setTimeout(function () {
+                        window['makeText'](345, 200 - Math.random() * 50, 345);
+                        window['mainscene'] = self;
+                        window['ResultScene'] = Result;
+                    }, this, 800);
                 });
                 match.visible = false;
                 fire.visible = false;
@@ -185,9 +214,10 @@ var Main = (function (_super) {
         shp.anchorX = 0.5;
         shp.anchorY = 0.5;
         shp.x = stageW / 2 + 30;
-        shp.y = 800;
+        shp.y = 818;
         shp.width = 80;
         shp.height = 40;
+        shp.isHit = false;
         this.addChild(shp);
         //tip
         var tipText = this.createBitmapByName('tip');
@@ -199,7 +229,7 @@ var Main = (function (_super) {
         var fuses = this.createBitmapByName('fuses');
         fuses.anchorY = 1;
         fuses.x = 340;
-        fuses.y = 792 + fuses.height;
+        fuses.y = 810 + fuses.height;
         this.addChild(fuses);
         fuses.mask = new egret.Rectangle(0, 0, fuses.width, fuses.height);
         //match
@@ -223,22 +253,44 @@ var Main = (function (_super) {
         fire.emitterX = match.x - 55;
         fire.emitterY = match.y - 45;
         this.addChild(fire);
-        var yanhua = new particle.GravityParticleSystem(RES.getRes('yanhuaTexture'), RES.getRes('yanhuaData'));
-        yanhua.emitterX = stageW / 2;
-        yanhua.emitterY = 830;
-        this.addChild(yanhua);
-        yanhua.start();
-        yanhua.visible = false;
+        //var yanhua = new particle.GravityParticleSystem(RES.getRes('yanhuaTexture'),RES.getRes('yanhuaData'));
+        //yanhua.emitterX = stageW/2;
+        //yanhua.emitterY = 830;
+        //this.addChild(yanhua);
+        //yanhua.start();
         var fire2 = new particle.GravityParticleSystem(RES.getRes('yanhuaTexture'), RES.getRes('fire2Data'));
         fire2.emitterX = stageW / 2 + 60;
-        fire2.emitterY = 800;
+        fire2.emitterY = 818;
         this.addChild(fire2);
-        var fire3 = new particle.GravityParticleSystem(RES.getRes('fire3Texture'), RES.getRes('fire3Data'));
-        this.addChild(fire3);
-        var fire4 = new particle.GravityParticleSystem(RES.getRes('yanhuaTexture'), RES.getRes('fire3Data'));
-        this.addChild(fire4);
-        var fire5 = new particle.GravityParticleSystem(RES.getRes('fire3Texture'), RES.getRes('fire3Data'));
-        this.addChild(fire5);
+        window['allYanhua'] = [];
+        var name = ['2022', 'beijing', 'wuhuan', 'tanluzhe'];
+        for (var i = 0; i < 4; i++) {
+            var text = this.createBitmapByName(name[i]);
+            text.anchorX = 0.5;
+            text.anchorY = 0.5;
+            text.x = stageW / 2;
+            text.y = stageH / 2;
+            text.scaleX = 0;
+            text.scaleY = 0;
+            this.addChild(text);
+            window['allYanhua'].push(text);
+        }
+        window['yanhuatween'] = function (obj) {
+            egret.Tween.get(obj).to({ scaleX: 1, scaleY: 1 }, 1000).wait(200).to({ alpha: 0 }, 500).call(function () {
+                obj.scaleX = 0;
+                obj.scaleY = 0;
+                obj.alpha = 1;
+                obj.visible = false;
+                self.stage.addChild(new Result());
+                self.stage.removeChild(self);
+            });
+        };
+        //var fire3:any = new particle.GravityParticleSystem(RES.getRes('fire3Texture'),RES.getRes('fire3Data'));
+        //this.addChild(fire3);
+        //var fire4 = new particle.GravityParticleSystem(RES.getRes('yanhuaTexture'),RES.getRes('fire3Data'));
+        //this.addChild(fire4);
+        //var fire5 = new particle.GravityParticleSystem(RES.getRes('fire3Texture'),RES.getRes('fire3Data'));
+        //this.addChild(fire5);
         // var topMask:egret.Shape = new egret.Shape();
         // topMask.graphics.beginFill(0x000000, 0.5);
         // topMask.graphics.drawRect(0, 0, stageW, stageH);

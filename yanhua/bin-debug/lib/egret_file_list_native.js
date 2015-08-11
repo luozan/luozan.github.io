@@ -125,5 +125,6 @@ var egret_file_list = [
 	"particle/Particle.js",
 	"particle/ParticleSystem.js",
 	"particle/GravityParticle.js",
-	"particle/GravityParticleSystem.js"
+	"particle/GravityParticleSystem.js",
+	"jweixin-1.0.0/jweixin-1.0.0-additional.js"
 ];

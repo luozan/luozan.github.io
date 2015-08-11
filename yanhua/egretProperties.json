@@ -13,6 +13,10 @@
 		{
 			"name": "particle",
 			"path":"particle/libsrc/particle"
+		},
+		{
+			"name": "jweixin-1.0.0",
+			"path": "."
 		}
 	],
 	"native": {

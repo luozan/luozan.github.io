@@ -50,26 +50,51 @@
           "type": "image",
           "url": "assets/fuses.png"
         },
-        {
-          "name": "fire3Texture",
-          "type": "image",
-          "url": "assets/fire3.png"
-        },
-        {
-          "name": "fire3Data",
-          "type": "json",
-          "url": "assets/fire3.json"
-        },
-        {
-          "name": "background2",
-          "type": "image",
-          "url": "assets/background2.png"
-        }
+      {
+        "name": "btn_share",
+        "type": "image",
+        "url": "assets/btn_share.png"
+      },
+      {
+        "name": "again",
+        "type": "image",
+        "url": "assets/again.png"
+      },
+      {
+        "name": "more",
+        "type": "image",
+        "url": "assets/more.png"
+      },
+      {
+        "url": "assets/105.mp3",
+        "type": "sound",
+        "name": "sound"
+      },
+      {
+        "url": "assets/tanluzhe.png",
+        "type": "image",
+        "name": "tanluzhe"
+      },
+      {
+        "url": "assets/2022.png",
+        "type": "image",
+        "name": "2022"
+      },
+      {
+        "url": "assets/beijing.png",
+        "type": "image",
+        "name": "beijing"
+      },
+      {
+        "url": "assets/wuhuan.png",
+        "type": "image",
+        "name": "wuhuan"
+      }
 	],
 	"groups": [
 		{
 			"name": "preload",
-			"keys": "background2,background,start_button,tip,match,fireTexture,fireData,yanhuaData,yanhuaTexture,fire2Data,fuses,fire3Data,fire3Texture"
+			"keys": "tanluzhe,2022,beijing,wuhuan,sound,btn_share,again,more,background,start_button,tip,match,fireTexture,fireData,yanhuaData,yanhuaTexture,fire2Data,fuses"
 		}
 	]
 }
