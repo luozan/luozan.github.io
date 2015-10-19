@@ -1,0 +1,76 @@
+{"frames": {
+
+"luffy_walk_0.png":
+{
+	"frame": {"x":36,"y":2,"w":34,"h":46},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":14,"w":34,"h":46},
+	"sourceSize": {"w":60,"h":60}
+},
+"luffy_walk_1.png":
+{
+	"frame": {"x":72,"y":2,"w":38,"h":46},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":12,"y":14,"w":38,"h":46},
+	"sourceSize": {"w":60,"h":60}
+},
+"luffy_walk_2.png":
+{
+	"frame": {"x":2,"y":98,"w":48,"h":38},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":11,"w":48,"h":38},
+	"sourceSize": {"w":60,"h":60}
+},
+"luffy_walk_3.png":
+{
+	"frame": {"x":2,"y":50,"w":38,"h":46},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":13,"w":38,"h":46},
+	"sourceSize": {"w":60,"h":60}
+},
+"luffy_walk_4.png":
+{
+	"frame": {"x":2,"y":2,"w":32,"h":46},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":13,"w":32,"h":46},
+	"sourceSize": {"w":60,"h":60}
+},
+"luffy_walk_5.png":
+{
+	"frame": {"x":2,"y":148,"w":42,"h":46},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":13,"w":42,"h":46},
+	"sourceSize": {"w":60,"h":60}
+},
+"luffy_walk_6.png":
+{
+	"frame": {"x":42,"y":50,"w":48,"h":38},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":11,"w":48,"h":38},
+	"sourceSize": {"w":60,"h":60}
+},
+"luffy_walk_7.png":
+{
+	"frame": {"x":52,"y":98,"w":38,"h":48},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":12,"w":38,"h":48},
+	"sourceSize": {"w":60,"h":60}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "walk.png",
+	"format": "RGBA8888",
+	"size": {"w":128,"h":256},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f30c0649828e5a5cd6542ed3aa4cf2b8$"
+}
+}

@@ -1,0 +1,60 @@
+{"frames": {
+
+"luffy_stand_0.png":
+{
+	"frame": {"x":2,"y":2,"w":30,"h":48},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":12,"w":30,"h":48},
+	"sourceSize": {"w":40,"h":60}
+},
+"luffy_stand_1.png":
+{
+	"frame": {"x":34,"y":2,"w":32,"h":46},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":14,"w":32,"h":46},
+	"sourceSize": {"w":40,"h":60}
+},
+"luffy_stand_2.png":
+{
+	"frame": {"x":68,"y":2,"w":34,"h":44},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":16,"w":34,"h":44},
+	"sourceSize": {"w":40,"h":60}
+},
+"luffy_stand_3.png":
+{
+	"frame": {"x":34,"y":2,"w":32,"h":46},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":14,"w":32,"h":46},
+	"sourceSize": {"w":40,"h":60}
+},
+"luffy_stand_4.png":
+{
+	"frame": {"x":2,"y":52,"w":32,"h":46},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":14,"w":32,"h":46},
+	"sourceSize": {"w":40,"h":60}
+},
+"luffy_stand_5.png":
+{
+	"frame": {"x":2,"y":2,"w":30,"h":48},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":12,"w":30,"h":48},
+	"sourceSize": {"w":40,"h":60}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "stand.png",
+	"format": "RGBA8888",
+	"size": {"w":128,"h":128},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:574df3414039d83b76d278e7bf13cbe9$"
+}
+}
