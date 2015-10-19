@@ -30,3 +30,13 @@ var Vector2 = function(x,y){
 	this.x = x||0;
 	this.y = y||0;
 }
+
+Vector2.prototype.plus = function(vector2){
+	return new Vector2(this.x + vector2.x,this.y + vector2.y);
+}
+
+Vector2.prototype.minus = function(vector2){
+	return new Vector2(this.x - vector2.x,this.y - vector2.y);
+}
+
+Vector2.prototype.constructor = Vector2;
