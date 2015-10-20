@@ -21,6 +21,8 @@
 	Game.jsonManager = [];
 	//编辑器组件容器
 	// Game.modules = [];
+	Game.world = null;
+	Game.physics = null;
 	//运行
 	Game.run = function(width,height,color){
 		Game.viewWidth = width || 1200;
@@ -53,6 +55,12 @@
 		// for(var key in moduleConfig){
 		// 	this.modules[key] = new window[key]();
 		// }
+		//时钟对象
+		Game.time = new Game.Time();
+		Game.time.init();
+		//物理引擎
+		Game.world = new Game.World();
+		Game.physics = new Game.Physics(Game.world);
 		//创建场景管理器
 		Game.sceneManager = new Game.SceneManager();
 		Game.sceneManager.stage = Game.stage;
@@ -90,8 +98,15 @@
 		requestAnimationFrame(Game.__loop);
 		//性能检测开始
 		Game.stats.begin();
+
+		Game.time.updateLastTime();
+
+		Game.world.update(Game.time.deltaTime);
+
 		Game.sceneManager.currentScene.update();
 		Game.renderer.render(Game.stage);
+		
+		Game.time.updateDeltaTime();
 		//性能检测结束
 		Game.stats.end();
 	}
@@ -160,6 +175,26 @@
 	}
 
 	Game.SceneManager.prototype.constructor = Game.SceneManager;
+
+	Game.Time = function(){
+		this.deltaTime = 0;
+		this.beginTime = 0;
+		this.lastTime = 0;
+		this.dateObject = null;
+	}
+
+	Game.Time.prototype.init = function(){
+		this.dateObject = new Date();
+		this.beginTime = this.dateObject.getTime();
+	}
+
+	Game.Time.prototype.updateDeltaTime = function(){
+		var currentTime = new Date().getTime();
+		this.deltaTime = (currentTime - this.lastTime)/1000;
+	}
+	Game.Time.prototype.updateLastTime = function(){
+		this.lastTime = new Date().getTime();
+	}
 
 	Root.Game = Game;
 }).call(this);

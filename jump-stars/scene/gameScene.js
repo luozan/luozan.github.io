@@ -11,6 +11,8 @@ function gameScene(){
 		console.log(Game.map);
 		Game.stage.addChild(Game.map);
 		Game.stage.addChild(mc);
+		Game.physics.addRigidbody(mc);
+		Game.world.add(mc);
 	}
 
 	this.update = function(){

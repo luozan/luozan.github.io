@@ -487,12 +487,10 @@ module.exports = function() {
             });
 
             map.tilesets.push(tileset);
-            console.log(tileset);
             tileset.tiles = [];
             var id, i, p, tile, shapeData, shapes, shape, points;
             for(id in tilesetData.tiles) {
                 tile = tilesetData.tiles[id];
-              console.log(tile);
                 for(i = 0; i < tile.objectgroup.objects.length; i++) {
 
                     shapeData = tile.objectgroup.objects[0];
