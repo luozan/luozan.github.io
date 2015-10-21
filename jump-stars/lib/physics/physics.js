@@ -22,6 +22,9 @@ Game.World.prototype.update = function(dt){
 	//更新速度
 	for(var i = 0;i < length;i++){
 		var object = this.container[i];
+		if (object.static) {
+			continue;
+		};
 		object.rigidbody.velocity.x += object.rigidbody.force.x*dt;
 		object.rigidbody.velocity.y += object.rigidbody.force.y*dt;
 		object.x += object.rigidbody.velocity.x;
@@ -29,11 +32,24 @@ Game.World.prototype.update = function(dt){
 	}
 	//碰撞检测
 	for(var i = 0;i < length;i++){
+		var object = this.container[i];
+		if (object.static) {
+			continue;
+		};
+		var collider = object.rigidbody.collider;
+		collider.x = object.x;
+		collider.y = object.y;
 		for(var j = 0;j < length;j++){
 			if (j === i) {
 				continue;
 			};
-
+			var object2 = this.container[j];
+			var collider2 = object2.rigidbody.collider;
+			collider2.x = object2.x;
+			collider2.y = object2.y;
+			if (Game.Physics.hitTest(collider,collider2)){
+				console.log('有物体发生碰撞！');
+			}
 		}
 	}
 }
@@ -49,10 +65,13 @@ Game.Physics = function(world){
 	this.world = world||null;
 }
 
-Game.Physics.prototype.addRigidbody = function(object,collider){
+Game.Physics.prototype.addRigidbody = function(object,collider,isStatic){
 	object.rigidbody = new Rigidbody();
 	object.rigidbody.collider = collider||new PIXI.Rectangle(0,0,object.width,object.height);
 	object.rigidbody.force.add(this.world.gravity);
+	if(isStatic === true){
+		object.static = true;
+	}
 	this.world.add(object);
 }
 
@@ -63,6 +82,53 @@ Game.Physics.prototype.removeRigidbody = function(object){
 
 Game.Physics.prototype.render = function(){
 
+}
+
+Game.Physics.hitTestWithRectangle = function(collider1,collider2){
+	if(collider2 instanceof PIXI.Rectangle){
+		if(
+			collider1.contains(collider2.x,collider2.y)
+			&&collider1.contains(collider2.x,collider2.y+collider2.height)
+			&&collider1.contains(collider2.x+collider2.width,collider2.y)
+			&&collider1.contains(collider2.x+collider2.width,collider2.y+collider2.height)
+			&&collider2.contains(collider1.x,collider1.y)
+			&&collider2.contains(collider1.x+collider1.width,collider1.y)
+			&&collider2.contains(collider1.x+collider1.width,collider1.y+collider1.height)
+			&&collider2.contains(collider1.x,collider1.y+collider1.height)
+		){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	else if(collider2 instanceof PIXI.Circle){
+
+	}
+}
+
+Game.Physics.hitTestWithCircle = function(collider1,collider2){
+	if(collider2 instanceof PIXI.Rectangle){
+
+	}
+	else if(collider2 instanceof PIXI.Circle){
+		var distance = collider1.radius+collider2.radius;
+		if(Math.sqrt(Math.pow(collider1.x - collider2.x,2)+Math.pow(collider1.y - collider2.y,2)) <= distance){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+}
+
+Game.Physics.hitTest = function(collider1,collider2){
+	if (collider1 instanceof PIXI.Rectangle) {
+		return Game.Physics.hitTestWithRectangle(collider1,collider2);
+	}
+	else if(collider1 instanceof PIXI.Circle){
+		return Game.Physics.hitTestWithCircle(collider1,collider2);
+	}
 }
 
 Game.Physics.prototype.constructor = Game.Physics;
@@ -88,6 +154,7 @@ Vector2.prototype.sub = function(vector2){
 Vector2.prototype.constructor = Vector2;
 
 var Rigidbody = function(){
+	this.static = false;
 	this.mass = 1;
 	this.velocity = new Vector2();
 	this.force = new Vector2();

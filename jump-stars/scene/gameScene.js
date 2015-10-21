@@ -3,7 +3,7 @@ function gameScene(){
 	this.init = function(){
 		var hero = $Data.heroes['luffy'];
 		var textures = this.createTexures('luffy_stand',6);
-		var mc = new PIXI.MovieClip(textures);
+		var mc = new PIXI.extras.MovieClip(textures);
 		mc.anchorX = mc.anchorY = 0.5;
 		mc.x = mc.y = 50;
 		mc.play();
