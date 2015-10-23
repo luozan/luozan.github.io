@@ -324,7 +324,7 @@ Layer.prototype = Object.create(PIXI.Container.prototype);
  */
 Layer.prototype.generateSprites = function(width, height, tileWidth, tileHeight, tilesets)
 {
-    var x, y, i, id, texture, sprite;
+    var x, y, i, id, texture, sprite,collider;
 
     for ( y = 0; y < height; y++ ) {
 
@@ -338,11 +338,11 @@ Layer.prototype.generateSprites = function(width, height, tileWidth, tileHeight,
             if ( id !== 0 ) {
 
                 texture = this.findTexture(id, tilesets);
-
+                collider = this.findCollider(id,tilesets);
                 sprite = new PIXI.Sprite(texture);
-
                 sprite.x = x * tileWidth;
                 sprite.y = y * tileHeight;
+                sprite.collider = collider;
 
                 this.addChild(sprite);
             }
@@ -362,6 +362,25 @@ Layer.prototype.findTexture = function(id, tilesets)
     ix = id - tileset.firstGID;
 
     return tileset.textures[ix];
+};
+
+Layer.prototype.findCollider = function(id, tilesets)
+{
+    var tileset, i, ix;
+
+    for ( i = tilesets.length - 1; i >= 0; i-- ) {
+        tileset = tilesets[i];
+        if(tileset.firstGID <= id) { break; }
+    }
+
+    ix = id - tileset.firstGID;
+
+    if(typeof tileset.tiles[ix] != 'undefined'){
+      return tileset.tiles[ix];
+    }
+    else{
+      return false;
+    }
 };
 
 module.exports = Layer;
@@ -522,9 +541,7 @@ module.exports = function() {
                 }
 
                 // object data id is 1 lower than gid for some reason
-                tileset.tiles[+id + 1] = {
-                    collision: shapes
-                };
+                tileset.tiles[+id + 1] = shapes;
             }
 
         });

@@ -9,10 +9,10 @@ function gameScene(){
 		mc.play();
 		mc.animationSpeed = 0.3;
 		console.log(Game.map);
+		Game.world.addMap(Game.map);
 		Game.stage.addChild(Game.map);
 		Game.stage.addChild(mc);
 		Game.physics.addRigidbody(mc);
-		Game.world.add(mc);
 	}
 
 	this.update = function(){

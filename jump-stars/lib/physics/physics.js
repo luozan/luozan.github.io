@@ -2,6 +2,7 @@ Game.World = function(){
 	this.container = [];
 	this.bounds = null;
 	this.gravity = new Vector2(0,10);
+	this.physics = null;
 }
 
 Game.World.prototype.add = function(object){
@@ -17,6 +18,19 @@ Game.World.prototype.remove = function(object){
 	return true;
 }
 
+Game.World.prototype.addMap = function(map){
+	for(var i = 0;i < map.children.length;i++){
+		var layer = map.children[i];
+		for(var j = 0;j < layer.children.length;j++){
+			var tile = layer.children[j];
+			if (!tile.collider) {
+				continue;
+			}
+			this.physics.addRigidbody(tile,tile.collider[0],true);
+		}
+	}
+}
+
 Game.World.prototype.update = function(dt){
 	var length = this.container.length;
 	//更新速度
@@ -25,20 +39,12 @@ Game.World.prototype.update = function(dt){
 		if (object.static) {
 			continue;
 		};
-		object.rigidbody.velocity.x += object.rigidbody.force.x*dt;
-		object.rigidbody.velocity.y += object.rigidbody.force.y*dt;
-		object.x += object.rigidbody.velocity.x;
-		object.y += object.rigidbody.velocity.y;
-	}
-	//碰撞检测
-	for(var i = 0;i < length;i++){
-		var object = this.container[i];
-		if (object.static) {
-			continue;
-		};
+		//碰撞检测
 		var collider = object.rigidbody.collider;
-		collider.x = object.x;
-		collider.y = object.y;
+		var velocityX = object.rigidbody.velocity.x + object.rigidbody.force.x*dt;
+		var velocityY = object.rigidbody.velocity.y + object.rigidbody.force.y*dt;
+		collider.x = object.x + velocityX;
+		collider.y = object.y + velocityY;
 		for(var j = 0;j < length;j++){
 			if (j === i) {
 				continue;
@@ -48,10 +54,21 @@ Game.World.prototype.update = function(dt){
 			collider2.x = object2.x;
 			collider2.y = object2.y;
 			if (Game.Physics.hitTest(collider,collider2)){
-				console.log('有物体发生碰撞！');
+				object.rigidbody.velocity.x = 0;
+				object.rigidbody.velocity.y = 0;
 			}
 		}
+		object.rigidbody.velocity.x += object.rigidbody.force.x*dt;
+		object.rigidbody.velocity.y += object.rigidbody.force.y*dt;
+		object.x += object.rigidbody.velocity.x;
+		object.y += object.rigidbody.velocity.y;
 	}
+	// for(var i = 0;i < length;i++){
+	// 	var object = this.container[i];
+	// 	if (object.static) {
+	// 		continue;
+	// 	};
+	// }
 }
 
 Game.World.prototype.getChildrenLength = function(){
@@ -63,6 +80,7 @@ Game.World.prototype.constructor = Game.World;
 
 Game.Physics = function(world){
 	this.world = world||null;
+	this.world.physics = this;
 }
 
 Game.Physics.prototype.addRigidbody = function(object,collider,isStatic){
@@ -88,13 +106,13 @@ Game.Physics.hitTestWithRectangle = function(collider1,collider2){
 	if(collider2 instanceof PIXI.Rectangle){
 		if(
 			collider1.contains(collider2.x,collider2.y)
-			&&collider1.contains(collider2.x,collider2.y+collider2.height)
-			&&collider1.contains(collider2.x+collider2.width,collider2.y)
-			&&collider1.contains(collider2.x+collider2.width,collider2.y+collider2.height)
-			&&collider2.contains(collider1.x,collider1.y)
-			&&collider2.contains(collider1.x+collider1.width,collider1.y)
-			&&collider2.contains(collider1.x+collider1.width,collider1.y+collider1.height)
-			&&collider2.contains(collider1.x,collider1.y+collider1.height)
+			||collider1.contains(collider2.x,collider2.y+collider2.height)
+			||collider1.contains(collider2.x+collider2.width,collider2.y)
+			||collider1.contains(collider2.x+collider2.width,collider2.y+collider2.height)
+			||collider2.contains(collider1.x,collider1.y)
+			||collider2.contains(collider1.x+collider1.width,collider1.y)
+			||collider2.contains(collider1.x+collider1.width,collider1.y+collider1.height)
+			||collider2.contains(collider1.x,collider1.y+collider1.height)
 		){
 			return true;
 		}
