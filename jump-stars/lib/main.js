@@ -36,10 +36,10 @@
 		//创建舞台
 		Game.stage = new PIXI.Container();
 		//创建渲染器
-		Game.renderer = PIXI.autoDetectRenderer(Game.viewWidth,Game.viewHeight,{},true);
+		Game.renderer = new PIXI.WebGLRenderer(Game.viewWidth,Game.viewHeight);
 		Game.canvas = Game.renderer.view;
-		Game.renderer.context.webkitImageSmoothingEnabled = false;
-		Game.renderer.context.imageSmoothingEnabled = false;
+		// Game.renderer.context.webkitImageSmoothingEnabled = false;
+		// Game.renderer.context.imageSmoothingEnabled = false;
 		//插入渲染器
 		document.body.appendChild(Game.canvas);
 		//创建性能监控面板
@@ -101,7 +101,7 @@
 
 		Game.time.updateLastTime();
 
-		Game.world.update(Game.time.deltaTime);
+		Game.world.update(Game.time.fixedDeltaTime);
 
 		Game.sceneManager.currentScene.update();
 		Game.renderer.render(Game.stage);
@@ -181,6 +181,7 @@
 		this.beginTime = 0;
 		this.lastTime = 0;
 		this.dateObject = null;
+		this.fixedDeltaTime = 0.002;
 	}
 
 	Game.Time.prototype.init = function(){

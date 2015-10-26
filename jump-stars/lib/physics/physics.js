@@ -45,6 +45,8 @@ Game.World.prototype.update = function(dt){
 		var velocityY = object.rigidbody.velocity.y + object.rigidbody.force.y*dt;
 		collider.x = object.x + velocityX;
 		collider.y = object.y + velocityY;
+		var center
+		var isHit = false;
 		for(var j = 0;j < length;j++){
 			if (j === i) {
 				continue;
@@ -54,14 +56,24 @@ Game.World.prototype.update = function(dt){
 			collider2.x = object2.x;
 			collider2.y = object2.y;
 			if (Game.Physics.hitTest(collider,collider2)){
-				object.rigidbody.velocity.x = 0;
-				object.rigidbody.velocity.y = 0;
+				// object.rigidbody.velocity.x = 0;
+				// object.rigidbody.velocity.y = 0;
+				if((collider.x+collider.width >= collider2.x || collider.x <= collider2.x+collider2.width)){
+					object.rigidbody.velocity.x = 0;
+				}
+				else if(collider.y <= collider2.y+collider2.height || collider.y+collider.height >= collider2.y){
+					object.rigidbody.velocity.y = 0;
+				}
+				isHit = true;
+				break;
 			}
 		}
-		object.rigidbody.velocity.x += object.rigidbody.force.x*dt;
-		object.rigidbody.velocity.y += object.rigidbody.force.y*dt;
-		object.x += object.rigidbody.velocity.x;
-		object.y += object.rigidbody.velocity.y;
+		if(!isHit){
+			object.rigidbody.velocity.x += object.rigidbody.force.x*dt;
+			object.rigidbody.velocity.y += object.rigidbody.force.y*dt;
+			object.x += object.rigidbody.velocity.x;
+			object.y += object.rigidbody.velocity.y;
+		}
 	}
 	// for(var i = 0;i < length;i++){
 	// 	var object = this.container[i];
@@ -177,4 +189,10 @@ var Rigidbody = function(){
 	this.velocity = new Vector2();
 	this.force = new Vector2();
 	this.collider = null;
+}
+
+Rigidbody.prototype.constructor = Rigidbody;
+
+Rigidbody.prototype.addForce = function(vector2){
+	this.force.add(vector2);
 }

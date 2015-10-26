@@ -1,5 +1,6 @@
 //游戏场景
 function gameScene(){
+	this.mc = null;
 	this.init = function(){
 		var hero = $Data.heroes['luffy'];
 		var textures = this.createTexures('luffy_stand',6);
@@ -13,10 +14,12 @@ function gameScene(){
 		Game.stage.addChild(Game.map);
 		Game.stage.addChild(mc);
 		Game.physics.addRigidbody(mc);
+		this.mc = mc;
+		this.mc.rigidbody.addForce(new Vector2(2,0));
+		window.mc = mc;
 	}
 
 	this.update = function(){
-
 	}
 
 	this.createSprite = function(id,anchorX,anchorY,x,y){
