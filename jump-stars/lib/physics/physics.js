@@ -91,6 +91,9 @@ Game.World.prototype.constructor = Game.World;
 
 
 Game.Physics = function(world){
+	//常量
+	this.THRESHOLD = 0.1;
+
 	this.world = world||null;
 	this.world.physics = this;
 }
@@ -98,6 +101,7 @@ Game.Physics = function(world){
 Game.Physics.prototype.addRigidbody = function(object,collider,isStatic){
 	object.rigidbody = new Rigidbody();
 	object.rigidbody.collider = collider||new PIXI.Rectangle(0,0,object.width,object.height);
+	object.rigidbody.collider.body = object;
 	object.rigidbody.force.add(this.world.gravity);
 	if(isStatic === true){
 		object.static = true;
@@ -159,6 +163,66 @@ Game.Physics.hitTest = function(collider1,collider2){
 	else if(collider1 instanceof PIXI.Circle){
 		return Game.Physics.hitTestWithCircle(collider1,collider2);
 	}
+}
+
+//暂只实现矩形与矩形碰撞后复原
+Game.Physics.resolve = function(collider1,collider2){
+	var collider1MidPointX = collider1.x+collider1.width/2;
+	var collider1MidPointY = collider1.y+collider1.height/2;
+	var collider2MidPointX = collider2.x+collider2.width/2;
+	var collider2MidPointY = collider2.y+collider2.height/2; 
+
+	var dx = (collider1MidPointX - collider1MidPointY)/collider2.width/2;
+	var dy = (collider1MidPointY - collider2MidPointY)/collider2.height/2;
+
+	var absDX = Math.abs(dx);
+	var absDY = Math.abs(dy);
+
+	if (Math.abs(absDX-absDY) < this.THRESHOLD){
+		if (dx < 0) {
+			collider1.x = collider2.x;
+		}else{
+			collider1.x = collider2.x + collider2.width;
+		}
+
+		if (dy < 0) {
+			collider1.y = collider2.y; 
+		}
+		else{
+			collider1.y = collider2.y+collider2.height;
+		}
+
+		var body = collider1.body;
+
+		if (Math.random() < 0.5) {
+			body.rigidbody.velocity.x = 0;
+		}
+		else{
+			body.rigidbody.velocity.y = 0;
+		}
+	}
+	else if(absDX > absDY){
+		if (dx < 0) {
+			collider1.x = collider2.x;
+		}else{
+			collider1.x = collider2.x + collider2.width;
+		}
+
+		body.rigidbody.velocity.x = 0;		
+	}
+	else{
+		if (dy < 0) {
+			collider1.y = collider2.y; 
+		}
+		else{
+			collider1.y = collider2.y+collider2.height;
+		}
+
+		body.rigidbody.velocity.y = 0;
+	}
+
+
+
 }
 
 Game.Physics.prototype.constructor = Game.Physics;

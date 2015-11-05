@@ -36,10 +36,10 @@
 		//创建舞台
 		Game.stage = new PIXI.Container();
 		//创建渲染器
-		Game.renderer = new PIXI.WebGLRenderer(Game.viewWidth,Game.viewHeight);
+		Game.renderer = new PIXI.WebGLRenderer(Game.viewWidth,Game.viewHeight,{},true);
 		Game.canvas = Game.renderer.view;
-		// Game.renderer.context.webkitImageSmoothingEnabled = false;
-		// Game.renderer.context.imageSmoothingEnabled = false;
+		Game.renderer.context.webkitImageSmoothingEnabled = false;
+		Game.renderer.context.imageSmoothingEnabled = false;
 		//插入渲染器
 		document.body.appendChild(Game.canvas);
 		//创建性能监控面板
