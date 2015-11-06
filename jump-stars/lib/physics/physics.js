@@ -161,7 +161,7 @@ Game.Physics.resolve = function(collider1,collider2){
 	var collider2MidPointX = collider2.x+collider2.width/2;
 	var collider2MidPointY = collider2.y+collider2.height/2; 
 
-	var dx = (collider1MidPointX - collider1MidPointY)/collider2.width/2;
+	var dx = (collider1MidPointX - collider1MidPointX)/collider2.width/2;
 	var dy = (collider1MidPointY - collider2MidPointY)/collider2.height/2;
 
 	var absDX = Math.abs(dx);
@@ -169,13 +169,13 @@ Game.Physics.resolve = function(collider1,collider2){
 	var body = collider1.body;
 	if (Math.abs(absDX-absDY) < this.THRESHOLD){
 		if (dx < 0) {
-			collider1.x = collider2.x;
+			collider1.x = collider2.x - collider1.width;
 		}else{
 			collider1.x = collider2.x + collider2.width;
 		}
 
 		if (dy < 0) {
-			collider1.y = collider2.y; 
+			collider1.y = collider2.y - collider1.height; 
 		}
 		else{
 			collider1.y = collider2.y+collider2.height;
@@ -189,8 +189,9 @@ Game.Physics.resolve = function(collider1,collider2){
 		}
 	}
 	else if(absDX > absDY){
+		console.log(collider1.x,collider2.x,absDX);
 		if (dx < 0) {
-			collider1.x = collider2.x;
+			collider1.x = collider2.x - collider1.width;
 		}else{
 			collider1.x = collider2.x + collider2.width;
 		}
