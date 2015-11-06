@@ -43,10 +43,10 @@ Game.World.prototype.update = function(dt){
 		var collider = object.rigidbody.collider;
 		var velocityX = object.rigidbody.velocity.x + object.rigidbody.force.x*dt;
 		var velocityY = object.rigidbody.velocity.y + object.rigidbody.force.y*dt;
+		object.rigidbody.velocity.x = velocityX;
+		object.rigidbody.velocity.y = velocityY;
 		collider.x = object.x + velocityX;
 		collider.y = object.y + velocityY;
-		var center
-		var isHit = false;
 		for(var j = 0;j < length;j++){
 			if (j === i) {
 				continue;
@@ -58,22 +58,11 @@ Game.World.prototype.update = function(dt){
 			if (Game.Physics.hitTest(collider,collider2)){
 				// object.rigidbody.velocity.x = 0;
 				// object.rigidbody.velocity.y = 0;
-				if((collider.x+collider.width >= collider2.x || collider.x <= collider2.x+collider2.width)){
-					object.rigidbody.velocity.x = 0;
-				}
-				else if(collider.y <= collider2.y+collider2.height || collider.y+collider.height >= collider2.y){
-					object.rigidbody.velocity.y = 0;
-				}
-				isHit = true;
-				break;
+				Game.Physics.resolve(collider,collider2);
 			}
 		}
-		if(!isHit){
-			object.rigidbody.velocity.x += object.rigidbody.force.x*dt;
-			object.rigidbody.velocity.y += object.rigidbody.force.y*dt;
-			object.x += object.rigidbody.velocity.x;
-			object.y += object.rigidbody.velocity.y;
-		}
+		object.x = collider.x;
+		object.y = collider.y;
 	}
 	// for(var i = 0;i < length;i++){
 	// 	var object = this.container[i];
@@ -177,7 +166,7 @@ Game.Physics.resolve = function(collider1,collider2){
 
 	var absDX = Math.abs(dx);
 	var absDY = Math.abs(dy);
-
+	var body = collider1.body;
 	if (Math.abs(absDX-absDY) < this.THRESHOLD){
 		if (dx < 0) {
 			collider1.x = collider2.x;
@@ -191,8 +180,6 @@ Game.Physics.resolve = function(collider1,collider2){
 		else{
 			collider1.y = collider2.y+collider2.height;
 		}
-
-		var body = collider1.body;
 
 		if (Math.random() < 0.5) {
 			body.rigidbody.velocity.x = 0;
@@ -212,7 +199,7 @@ Game.Physics.resolve = function(collider1,collider2){
 	}
 	else{
 		if (dy < 0) {
-			collider1.y = collider2.y; 
+			collider1.y = collider2.y - collider1.height; 
 		}
 		else{
 			collider1.y = collider2.y+collider2.height;

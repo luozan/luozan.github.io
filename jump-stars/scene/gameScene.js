@@ -5,11 +5,13 @@ function gameScene(){
 		var hero = $Data.heroes['luffy'];
 		var textures = this.createTexures('luffy_stand',6);
 		var mc = new PIXI.extras.MovieClip(textures);
-		mc.anchorX = mc.anchorY = 0.5;
-		mc.x = mc.y = 50;
+		var gf = new PIXI.Graphics();
+		gf.lineStyle(1,0xff0000,1);
+		gf.drawRect(0,0,mc.width,mc.height);
+		mc.addChild(gf);
+		mc.x = mc.y = 100;
 		mc.play();
 		mc.animationSpeed = 0.3;
-		console.log(Game.map);
 		Game.world.addMap(Game.map);
 		Game.stage.addChild(Game.map);
 		Game.stage.addChild(mc);
