@@ -18,6 +18,20 @@ function gameScene(){
 		Game.physics.addRigidbody(mc);
 		this.mc = mc;
 		this.mc.rigidbody.addForce(new Vector2(2,0));
+		var wall = new PIXI.Graphics();
+		wall.width = 50;
+		wall.height = Game.viewHeight;
+		wall.x = -50;
+		Game.physics.addRigidbody(wall,new PIXI.Rectangle(0,0,50,Game.viewHeight),true);
+		var wall2 = new PIXI.Graphics();
+		wall2.width = 50;
+		wall2.height = Game.viewHeight;
+		wall2.x = Game.viewWidth;
+		wall2.beginFill(0xff0000,1);
+		wall2.drawRect(0,0,50,Game.viewHeight);
+		wall2.endFill();
+		Game.physics.addRigidbody(wall2,new PIXI.Rectangle(0,0,50,Game.viewHeight),true);
+		Game.stage.addChild(wall2);
 		window.mc = mc;
 	}
 

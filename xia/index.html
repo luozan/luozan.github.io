@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>终极色盲测试</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no,target-densitydpi=device-dpi"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+    <meta name="full-screen" content="true"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+
+    <style>
+        body {
+            text-align: center;
+            background: #FFFFFF;
+            padding: 0;
+            border: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        html {
+            -ms-touch-action: none; /* Direct all pointer events to JavaScript code. */
+            overflow: hidden;
+        }
+
+        div, canvas {
+            display: block;
+            position: absolute;
+            margin: 0 auto;
+            padding: 0;
+            border: 0;
+        }
+        @keyframes myfirst
+        {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+
+        @-moz-keyframes myfirst /* Firefox */
+        {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+
+        @-webkit-keyframes myfirst /* Safari 和 Chrome */
+        {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+
+        @-o-keyframes myfirst /* Opera */
+        {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+
+        .fade {
+            animation: myfirst 3s;
+            -moz-animation: myfirst 3s;	/* Firefox */
+            -webkit-animation: myfirst 3s;	/* Safari 和 Chrome */
+            -o-animation: myfirst 3s;	/* Opera */
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    var newObjIwan = {
+        gameScreen : true ,   // true为竖屏   false为横屏
+        iwanSpeed : 150,      //默认时间，根据游戏的速度自定义一个默认进度时间 单位（毫秒）
+        iwanNumberLoad : 0,     //初始百分比值
+        currentOk : false
+    }
+</script>
+<script src="http://cdn.iwangame.net/loading/iwanloading.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://cdn.iwangame.net/js/iwan.js"></script>
+<div id='background'style="position: absolute;top: 0;left: 0;">
+</div>
+<div style="position:relative;" id="gameDiv"></div>
+<script>var document_class = "Main";</script><!--这部分内容在编译时会被替换，要修改文档类，请到工程目录下的egretProperties.json内编辑。-->
+<!--This part will be replaced during compiling, and to modify the document class, please go to the project directory and edit in the file of egretProperties. Jsonr-->
+<script src="launcher/egret_require.js"></script>
+<script src="launcher/egret_loader.js"></script>
+<script src="launcher/game-min.js"></script>
+<script>
+    var support = [].map && document.createElement("canvas").getContext;
+    if (support) {
+        egret_h5.startGame();
+    }
+    else {
+        alert("Egret 不支持您当前的浏览器")
+    }
+</script>
+<script>
+    (function(){
+        var background =document.getElementById('background');
+        background.style.display = 'none';
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        var divWidth = width/5;
+        console.log(divWidth,width);
+        var length= ~~height/divWidth;
+        var arr = [];
+        for(var i = 0;i < 5*length;i++){
+            var div = document.createElement('div');
+            div.style.width = div.style.height = divWidth+'px';
+            div.style.float = 'left';
+            div.style.position = 'relative';
+            div.style.backgroundColor = 'rgba('+~~(255*Math.random())+','+~~(255*Math.random())+','+~~(255*Math.random())+',0.4)';
+            div.style.opacity = '0';
+            arr.push(div);
+            background.appendChild(div);
+        }
+        setInterval(function(){
+            for(var i = 0; i < arr.length;i++){
+                if(arr[i].style.opacity == '0'){
+                    if(Math.round(Math.random()*3)==1) {
+                        background.removeChild(arr[i]);
+                        if(i+1<arr.length){
+                            background.insertBefore(arr[i],arr[i+1])
+                        }
+                        else{
+                            background.appendChild(arr[i]);
+                        }
+                        arr[i].className = 'fade';
+                    }
+                }
+            }
+        },1500);
+    })()
+
+</script>
+</body>
+</html>

@@ -161,7 +161,7 @@ Game.Physics.resolve = function(collider1,collider2){
 	var collider2MidPointX = collider2.x+collider2.width/2;
 	var collider2MidPointY = collider2.y+collider2.height/2; 
 
-	var dx = (collider1MidPointX - collider1MidPointX)/collider2.width/2;
+	var dx = (collider1MidPointX - collider2MidPointX)/collider2.width/2;
 	var dy = (collider1MidPointY - collider2MidPointY)/collider2.height/2;
 
 	var absDX = Math.abs(dx);

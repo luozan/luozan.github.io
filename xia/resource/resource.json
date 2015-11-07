@@ -1,0 +1,23 @@
+{
+	"groups":[
+	{
+		"keys":"retrybutton_png,startbutton_png,logo_png",
+		"name":"preload"
+	}],
+	"resources":[
+	{
+		"name":"retrybutton_png",
+		"type":"image",
+		"url":"assets/retrybutton.png"
+	},
+	{
+		"name":"startbutton_png",
+		"type":"image",
+		"url":"assets/startbutton.png"
+	},
+	{
+		"name":"logo_png",
+		"type":"image",
+		"url":"assets/logo.png"
+	}]
+}
