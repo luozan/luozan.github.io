@@ -1,0 +1,138 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+}
+canvas{
+	position: relative;
+	margin: 50px auto;
+	display: block;
+}
+/*
+#UI{
+	z-index: 9999;
+}
+#roomScene{
+	position: absolute;
+	width: 720px;
+	height: 405px;
+	margin-left: -360px;
+	margin-top: -202.5px;
+	left:50%;
+	top:50%;
+	background-color: #DDD
+}
+.room-list{
+	width: 100%;
+	height: 300px;
+	background-color: #ffffff;
+	overflow: auto;
+}
+.room-list li{
+	width: 100%;
+	height: 30px;
+	background-color: #DDD;
+	display: block;
+	line-height: 30px;
+	border-bottom: 1px solid #666;
+}
+.room-list span{
+	display: block;
+	width: 150px;
+	text-align: center;
+	float: left;
+}
+.room-list .room-name{
+
+}
+.room-list .creator{
+
+}
+.room-list .people{
+	margin-left: 200px;
+}
+.room-list .btn-join{
+	width: 60px;
+	height: 23px;
+}
+.btn-list{
+	text-align: center;
+}
+.btn-list button{
+	width: 100px;
+	height: 30px;
+	margin: 37px 100px;
+}
+#roomScene .create-room{
+	width: 500px;
+	height: 220px;
+	background-color: #eee;
+	position: absolute;
+	left: 50%;
+	top:50%;
+	margin-left: -250px;
+	margin-top: -150px;
+	border: 1px solid #999;
+	border-radius: 10px;
+	text-align: center;
+}
+.create-room h3{
+	margin-top: 10px;
+	text-align: center;
+}
+.create-room label{
+	width: 100px;
+	text-align: right;
+}
+.create-room input{
+	width: 150px;
+	height: 30px;
+	margin-top: 50px;
+	text-align: center;
+}
+.create-room button{
+	width: 100px;
+	height: 30px;
+	margin: 37px 40px 0 40px;
+}
+#gameUI{
+	width: 100%;
+	height: 100%;
+}
+.chat-content{
+	height: 85%;
+	width:100%;
+	background-color: #EEE;
+}
+.chat-content ul{
+	overflow: auto;
+	width: 100%;
+}
+.chat-content li{
+	line-height: 20px;
+	display: block;
+	padding: 0 20px;
+}
+.chat-content p{
+	width: 100%;
+	height: auto;
+	word-break: normal;
+	word-wrap: break-word;
+}
+.chat-input input{
+	width: 75%;
+	height: 30px;
+	line-height: 30px;
+	float: left;
+	margin-top: 15px;
+	margin-left: 10px;
+	padding:0 10px;
+}
+.chat-input button{
+	width: 100px;
+	height: 30px;
+	float: left;
+	margin-left: 20px;
+	margin-top: 15px;
+}*/
