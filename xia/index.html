@@ -75,8 +75,8 @@
         currentOk : false
     }
 </script>
-<script src="http://cdn.iwangame.net/loading/iwanloading.js" type="text/javascript" charset="utf-8"></script>
-<script src="http://cdn.iwangame.net/js/iwan.js"></script>
+<!-- <script src="http://cdn.iwangame.net/loading/iwanloading.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://cdn.iwangame.net/js/iwan.js"></script> -->
 <div id='background'style="position: absolute;top: 0;left: 0;">
 </div>
 <div style="position:relative;" id="gameDiv"></div>
@@ -95,42 +95,42 @@
     }
 </script>
 <script>
-    (function(){
-        var background =document.getElementById('background');
-        background.style.display = 'none';
-        var width = window.innerWidth;
-        var height = window.innerHeight;
-        var divWidth = width/5;
-        console.log(divWidth,width);
-        var length= ~~height/divWidth;
-        var arr = [];
-        for(var i = 0;i < 5*length;i++){
-            var div = document.createElement('div');
-            div.style.width = div.style.height = divWidth+'px';
-            div.style.float = 'left';
-            div.style.position = 'relative';
-            div.style.backgroundColor = 'rgba('+~~(255*Math.random())+','+~~(255*Math.random())+','+~~(255*Math.random())+',0.4)';
-            div.style.opacity = '0';
-            arr.push(div);
-            background.appendChild(div);
-        }
-        setInterval(function(){
-            for(var i = 0; i < arr.length;i++){
-                if(arr[i].style.opacity == '0'){
-                    if(Math.round(Math.random()*3)==1) {
-                        background.removeChild(arr[i]);
-                        if(i+1<arr.length){
-                            background.insertBefore(arr[i],arr[i+1])
-                        }
-                        else{
-                            background.appendChild(arr[i]);
-                        }
-                        arr[i].className = 'fade';
-                    }
-                }
-            }
-        },1500);
-    })()
+    // (function(){
+    //     var background =document.getElementById('background');
+    //     background.style.display = 'none';
+    //     var width = window.innerWidth;
+    //     var height = window.innerHeight;
+    //     var divWidth = width/5;
+    //     console.log(divWidth,width);
+    //     var length= ~~height/divWidth;
+    //     var arr = [];
+    //     for(var i = 0;i < 5*length;i++){
+    //         var div = document.createElement('div');
+    //         div.style.width = div.style.height = divWidth+'px';
+    //         div.style.float = 'left';
+    //         div.style.position = 'relative';
+    //         div.style.backgroundColor = 'rgba('+~~(255*Math.random())+','+~~(255*Math.random())+','+~~(255*Math.random())+',0.4)';
+    //         div.style.opacity = '0';
+    //         arr.push(div);
+    //         background.appendChild(div);
+    //     }
+    //     setInterval(function(){
+    //         for(var i = 0; i < arr.length;i++){
+    //             if(arr[i].style.opacity == '0'){
+    //                 if(Math.round(Math.random()*3)==1) {
+    //                     background.removeChild(arr[i]);
+    //                     if(i+1<arr.length){
+    //                         background.insertBefore(arr[i],arr[i+1])
+    //                     }
+    //                     else{
+    //                         background.appendChild(arr[i]);
+    //                     }
+    //                     arr[i].className = 'fade';
+    //                 }
+    //             }
+    //         }
+    //     },1500);
+    // })()
 
 </script>
 </body>
